@@ -1,4 +1,4 @@
-package com.example.worktunnelweb.service.impl;
+package com.example.worktunnelweb.service;
 
 import com.example.worktunnelweb.entity.User;
 import com.example.worktunnelweb.repository.UserRepository;

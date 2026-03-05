@@ -1,8 +1,9 @@
 package com.example.worktunnelweb.controller;
 
 import com.example.worktunnelweb.dto.LoginDTO;
+import com.example.worktunnelweb.dto.RegisterDTO;
+import com.example.worktunnelweb.service.RegisterService;
 import com.example.worktunnelweb.util.JwtUtil;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private RegisterService registerService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -34,5 +37,9 @@ public class AuthController {
         String token = jwtUtil.generateToken(request.getUsername());
 
         return ResponseEntity.ok(token);
+    }
+    @PostMapping("/register")
+    public void registerUser(@RequestBody RegisterDTO request ) {
+          registerService.register(request);
     }
 }
