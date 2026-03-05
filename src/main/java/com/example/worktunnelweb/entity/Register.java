@@ -21,12 +21,16 @@ public class Register {
     private String name;
     private String email;
     private String profession;
+    private String password;
     private int age;
 
-    public Register(String name, String email, String profession, int age) {
+
+
+    public Register(String name, String email, String profession, String password, int age) {
         this.name = name;
         this.email = email;
         this.profession = profession;
+        this.password = password;
         this.age = age;
     }
 }

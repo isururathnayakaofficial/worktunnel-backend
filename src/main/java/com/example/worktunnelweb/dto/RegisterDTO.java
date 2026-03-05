@@ -11,5 +11,6 @@ public class RegisterDTO {
     private String name;
     private String email;
     private String profession;
+    private String password;
     private int age;
 }
