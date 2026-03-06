@@ -18,15 +18,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final UserRepository userRepository;
+
     private final RegisterRepo registerRepo;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
     public AuthResponseDTO authenticate(AuthDTO authDTO) {
 
-        // find user from database
-        User user = userRepository.findByUsername(authDTO.getUsername())
+        // find register user from database
+        Register user = (Register) registerRepo.findByName(authDTO.getUsername())
                 .orElseThrow(() ->
                         new UsernameNotFoundException(authDTO.getUsername()));
 
@@ -37,8 +37,8 @@ public class AuthService {
 
         // generate JWT token
         String token = jwtUtil.generateToken(authDTO.getUsername());
-
         return new AuthResponseDTO(token);
+
     }
 
     public String register(RegisterDTO registerDTO) {
