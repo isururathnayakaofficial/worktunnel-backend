@@ -1,17 +1,15 @@
 package com.example.worktunnelweb.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchConnectionDetails;
 @Entity
 @Table(name = "users")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class User {
 
     @Id
@@ -21,5 +19,4 @@ public class User {
     private String username;
     private String password;
 
-    // getters and setters
 }

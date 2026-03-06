@@ -13,4 +13,8 @@ public class RegisterDTO {
     private String profession;
     private String password;
     private int age;
+
+    public String getUsername() {
+        return name;
+    }
 }
