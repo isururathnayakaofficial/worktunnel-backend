@@ -39,7 +39,7 @@ public class SecurityConfig {
                                 "auth/register"
                         ).permitAll()
 
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
 
                 .sessionManagement(session ->
