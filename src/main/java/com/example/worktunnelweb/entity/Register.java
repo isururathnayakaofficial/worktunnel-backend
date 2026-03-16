@@ -1,10 +1,9 @@
 package com.example.worktunnelweb.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,6 +20,9 @@ public class Register {
     private String profession;
     private String password;
     private int age;
+
+    @OneToMany(mappedBy = "register", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TodoList> todos;
 
 
 
