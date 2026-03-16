@@ -19,8 +19,11 @@ public class TodoList {
     private String title;
     private String priority;
     private LocalDate date;
+    @Column(name = "starttime")
     private Time startTime;
+    @Column(name = "endtime")
     private Time Endtime;
+    private String status;
     @ManyToOne()
     @JoinColumn(name = "register_id",nullable = false)
     private Register register;

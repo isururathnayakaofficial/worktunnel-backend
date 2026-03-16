@@ -21,7 +21,7 @@ public class TodoListServiceImpl implements TodoListService {
         boolean exists = todoListRepo.existsByRegisterIdAndDateAndStartTime(
                 registeredId,
                 todoListDTO.getDate(),
-                todoListDTO.getStarttime()
+                todoListDTO.getStartTime()
         );
 
         if (exists) {
@@ -35,8 +35,14 @@ public class TodoListServiceImpl implements TodoListService {
         todo.setTitle(todoListDTO.getTitle());
         todo.setPriority(todoListDTO.getPriority());
         todo.setDate(todoListDTO.getDate());
-        todo.setStartTime(todoListDTO.getStarttime());
-        todo.setEndtime(todoListDTO.getEndtime());
+        todo.setStartTime(todoListDTO.getStartTime());
+        todo.setEndtime(todoListDTO.getEndTime());
+        //justify the is the task completed or pending update
+        if (todoListDTO.getStatus() == null || todoListDTO.getStatus().isEmpty()) {
+            todo.setStatus("PENDING");
+        } else {
+            todo.setStatus(todoListDTO.getStatus());
+        }
 
         // set relationship
         todo.setRegister(register);
