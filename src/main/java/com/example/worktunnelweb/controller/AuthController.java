@@ -31,13 +31,5 @@ public class AuthController {
     public void registerUser(@RequestBody RegisterDTO request ) {
        authService.register(request);
     }
-    @PostMapping("/chat-log")
-    public void saveKeyword(@RequestBody Map<String,String> data){
 
-        String keyword = data.get("keyword");
-
-        System.out.println("User searched: " + keyword);
-
-        // Save to DB
-    }
 }
