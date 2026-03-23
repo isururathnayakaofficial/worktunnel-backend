@@ -1,8 +1,9 @@
 package com.example.worktunnelweb.service.impl;
 
 import com.example.worktunnelweb.dto.AnonymousAiDTO;
-import com.example.worktunnelweb.entity.AnonymousAi;
-import com.example.worktunnelweb.repository.AnonymousAiRepo;
+import com.example.worktunnelweb.dto.UserAiDTO;
+import com.example.worktunnelweb.entity.UserAi;
+import com.example.worktunnelweb.repository.AiRepo;
 import com.example.worktunnelweb.service.AnonymousAiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,8 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class AnonymousAiServiceImpl implements AnonymousAiService {
-    private final AnonymousAiRepo anonymousAiRepo;
+public class AiServiceImpl implements AnonymousAiService {
+    private final AiRepo anonymousAiRepo;
     @Override
     public void saveSearchResult() {
 
@@ -23,7 +24,15 @@ public class AnonymousAiServiceImpl implements AnonymousAiService {
 
     @Override
     public void keywordFilter(AnonymousAiDTO aiDTO) {
-        String sentence = aiDTO.getSearchResult();
+
+
+
+    }
+
+    @Override
+    public void promptSave(UserAiDTO userAiDTO) {
+        String sentence = userAiDTO.getPromptKeywords();
+        int userId=userAiDTO.getUserId();
 
         //Convert to lowercase
         sentence = sentence.toLowerCase();
@@ -52,10 +61,9 @@ public class AnonymousAiServiceImpl implements AnonymousAiService {
         String keywordCSV = String.join(",", keywords);
 
         // Save (example)
-        AnonymousAi aiEntity = new AnonymousAi();
-        aiEntity.setSearchResult(keywordCSV);
-        anonymousAiRepo.save(aiEntity);
-
+        UserAi aiEntity = new UserAi();
+        aiEntity.setPromptKeywords(keywordCSV);
+        aiEntity.setUserId(userId);
     }
 
 

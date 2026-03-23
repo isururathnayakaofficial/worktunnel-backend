@@ -3,6 +3,7 @@ package com.example.worktunnelweb.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -14,6 +15,7 @@ import java.util.List;
 public class Register {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int id;
     private String name;
     private String email;
@@ -23,6 +25,8 @@ public class Register {
 
     @OneToMany(mappedBy = "register", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TodoList> todos;
+    @OneToMany(mappedBy = "register", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserAi> userAiList=new ArrayList<>();
 
 
 

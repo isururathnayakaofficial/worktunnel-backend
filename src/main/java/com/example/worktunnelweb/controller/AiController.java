@@ -1,6 +1,7 @@
 package com.example.worktunnelweb.controller;
 
-import com.example.worktunnelweb.dto.AnonymousAiDTO;
+
+import com.example.worktunnelweb.dto.UserAiDTO;
 import com.example.worktunnelweb.service.AnonymousAiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -9,10 +10,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/ai")
-public class AnonymousAiController {
+public class AiController {
     private final AnonymousAiService anonimasAiService;
     @PostMapping("/search")
-    public void getSearchAi(@RequestBody AnonymousAiDTO anonimasAiDTO) {
-        anonimasAiService.keywordFilter(anonimasAiDTO);
+    public void getSearchAi(@RequestBody UserAiDTO userAiDTO) {
+        anonimasAiService.promptSave(userAiDTO);
     }
+
+
 }
