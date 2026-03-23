@@ -1,6 +1,5 @@
 package com.example.worktunnelweb.service.impl;
 
-import com.example.worktunnelweb.dto.AnonymousAiDTO;
 import com.example.worktunnelweb.dto.UserAiDTO;
 import com.example.worktunnelweb.entity.Register;
 import com.example.worktunnelweb.entity.UserAi;

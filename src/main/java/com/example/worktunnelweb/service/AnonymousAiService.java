@@ -1,6 +1,5 @@
 package com.example.worktunnelweb.service;
 
-import com.example.worktunnelweb.dto.AnonymousAiDTO;
 import com.example.worktunnelweb.dto.UserAiDTO;
 
 public interface AnonymousAiService {
