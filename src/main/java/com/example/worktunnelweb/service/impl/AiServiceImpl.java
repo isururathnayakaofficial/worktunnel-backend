@@ -18,18 +18,9 @@ import java.util.Set;
 public class AiServiceImpl implements AnonymousAiService {
     private final RegisterRepo registerRepo;
     private final AiRepo aiRepo;
-    @Override
-    public void saveSearchResult() {
-
-
-    }
-
-    @Override
-    public void keywordFilter(AnonymousAiDTO aiDTO) {
 
 
 
-    }
 
     @Override
     public void promptSave(UserAiDTO userAiDTO) {
@@ -70,7 +61,7 @@ public class AiServiceImpl implements AnonymousAiService {
         UserAi aiEntity = new UserAi();
         aiEntity.setPromptKeywords(keywordCSV);
 
-        // ✅ Handle user / anonymous
+        // Handle user / anonymous
         if (userAiDTO.getUserId() != null) {
 
             Register register = registerRepo.findById(userAiDTO.getUserId())
@@ -79,8 +70,8 @@ public class AiServiceImpl implements AnonymousAiService {
             aiEntity.setRegister(register);
 
         } else {
-            // 🔥 Anonymous user case
-            aiEntity.setAnonymousUser("Anonymous User"); // <-- you must have this field in entity
+            //  Anonymous user case
+            aiEntity.setAnonymousUser("Anonymous User"); //
         }
 
         aiRepo.save(aiEntity);
