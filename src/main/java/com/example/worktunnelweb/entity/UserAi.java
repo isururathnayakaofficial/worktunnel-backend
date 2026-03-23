@@ -10,6 +10,8 @@ public class UserAi {
     public int id;
 
     @ManyToOne
-    public Register userId;
+
+    public Register register;
     public String promptKeywords;
+    private String anonymousUser;
 }

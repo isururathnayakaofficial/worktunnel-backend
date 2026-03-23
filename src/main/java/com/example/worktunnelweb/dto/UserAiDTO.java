@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserAiDTO {
-    public int userId;
+    public String userId;
     public String promptKeywords;
+    private String anonymousUser;
 }
