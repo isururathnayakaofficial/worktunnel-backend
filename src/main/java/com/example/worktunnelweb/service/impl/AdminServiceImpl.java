@@ -17,6 +17,7 @@ public class AdminServiceImpl implements AdminService {
 
     private final PasswordEncoder passwordEncoder;
     private final AdminRepo adminRepo;
+
     @Override
     public void saveAdmin(SuperAdminDTO adminDTO) {
 
