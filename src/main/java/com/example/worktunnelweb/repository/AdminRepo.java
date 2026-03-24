@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository;
 public interface AdminRepo extends CrudRepository<Admin, String> {
     boolean existsByEmail(String attr0);
 
-    boolean existsByRegisterIdAndDateAndStartTime(void attr0, void attr1, void attr2);
 }
