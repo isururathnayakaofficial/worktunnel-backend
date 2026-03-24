@@ -9,5 +9,7 @@ public class SuperAdminDTO {
     private String adminName;
     private String email;
     private String contact;
+    private String password;
     private String roleName;
+
 }

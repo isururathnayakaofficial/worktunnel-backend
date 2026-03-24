@@ -1,6 +1,7 @@
 package com.example.worktunnelweb.service.impl;
 
 import com.example.worktunnelweb.dto.AdminDTO;
+import com.example.worktunnelweb.dto.SuperAdminDTO;
 import com.example.worktunnelweb.entity.Admin;
 import com.example.worktunnelweb.repository.AdminRepo;
 import com.example.worktunnelweb.service.AdminService;
@@ -16,13 +17,19 @@ public class AdminServiceImpl implements AdminService {
 
     private final AdminRepo adminRepo;
     @Override
-    public void saveAdmin(AdminDTO adminDTO) {
+    public void saveAdmin(SuperAdminDTO adminDTO) {
+
+        if (adminRepo.existsByEmail(adminDTO.getEmail())) {
+            throw new RuntimeException("Email is already in use");
+        }
       Admin admin = new Admin();
-      admin.getId(),
-      admin.getAdminName(),
-        admin.getEmail(),
-        admin.getContact(),
-        admin.getRoleName();
+      admin.setAdminName(adminDTO.getAdminName());
+      admin.setEmail(adminDTO.getEmail());
+      admin.setContact(adminDTO.getContact());
+      admin.setPassword(adminDTO.getPassword());
+      admin.getRoleName();
+      adminRepo.save(admin);
+
     }
 
     @Override
