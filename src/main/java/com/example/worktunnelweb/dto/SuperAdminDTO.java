@@ -2,7 +2,6 @@ package com.example.worktunnelweb.dto;
 
 import lombok.Data;
 
-import javax.management.relation.Role;
 
 @Data
 public class SuperAdminDTO {

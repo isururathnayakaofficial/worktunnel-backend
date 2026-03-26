@@ -10,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
@@ -24,12 +23,15 @@ public class AdminServiceImpl implements AdminService {
         if (adminRepo.existsByEmail(adminDTO.getEmail())) {
             throw new RuntimeException("Email is already in use");
         }
+        if (adminRepo.existsByPassword(adminDTO.getPassword())) {
+            throw new RuntimeException("Password is already in use");
+        }
       Admin admin = new Admin();
       admin.setAdminName(adminDTO.getAdminName());
       admin.setEmail(adminDTO.getEmail());
       admin.setContact(adminDTO.getContact());
       admin.setPassword(passwordEncoder.encode(adminDTO.getPassword()));
-      admin.setRoleName(admin.getRoleName());
+      admin.setRoleName(adminDTO.getRoleName());
       adminRepo.save(admin);
 
     }
