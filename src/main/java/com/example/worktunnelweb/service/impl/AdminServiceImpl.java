@@ -50,7 +50,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void deleteAdmin(AdminDTO adminDTO) {
+    public void deleteAdmin(int id) {
+        if (!adminRepo.existsById(String.valueOf(id))) {
+            throw new RuntimeException("Admin not found");
+        }
+        adminRepo.deleteById(String.valueOf(id));
 
     }
 }
