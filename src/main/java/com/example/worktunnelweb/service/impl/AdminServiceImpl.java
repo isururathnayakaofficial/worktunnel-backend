@@ -37,7 +37,15 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void updateAdmin(AdminDTO adminDTO) {
+    public void updateAdmin(AdminDTO adminDTO,int id) {
+
+     Admin admin = adminRepo.findById(String.valueOf(id)).orElseThrow(() -> new RuntimeException("Admin not found"));
+     admin.setAdminName(adminDTO.getAdminName());
+     admin.setEmail(adminDTO.getEmail());
+     admin.setContact(adminDTO.getContact());
+     admin.setPassword(passwordEncoder.encode(adminDTO.getPassword()));
+     admin.setRoleName(adminDTO.getRoleName());
+     adminRepo.save(admin);
 
     }
 

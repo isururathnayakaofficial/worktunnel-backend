@@ -20,9 +20,9 @@ public class AdminController {
     @PostMapping("/login")
     public void login (@RequestBody AdminDTO adminDTO) {
     }
-    @PutMapping("/update")
-    public void Update(@RequestBody AdminDTO adminDTO) {
-        adminService.updateAdmin(adminDTO);
+    @PutMapping("/update/{id}")
+    public void Update(@RequestBody AdminDTO adminDTO, @PathVariable int id) {
+        adminService.updateAdmin(adminDTO,id);
     }
 
 }

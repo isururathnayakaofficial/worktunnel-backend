@@ -5,7 +5,7 @@ import com.example.worktunnelweb.dto.AdminDTO;
 
 public interface AdminService {
     void saveAdmin(AdminDTO adminDTO);
-    void updateAdmin(AdminDTO adminDTO);
+    void updateAdmin(AdminDTO adminDTO,int id);
     void deleteAdmin(AdminDTO adminDTO);
 
 }
