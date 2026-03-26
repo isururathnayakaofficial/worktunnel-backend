@@ -12,6 +12,11 @@ import java.util.Optional;
 @Repository
 public interface TodoListRepo extends JpaRepository<TodoList, Long> {
     boolean existsByRegisterIdAndDateAndStartTime(Long registerId, LocalDate date, Time startTime);
+    Optional<TodoList> findByRegisterIdAndDateAndStartTime(
+            Long registerId,
+            LocalDate date,
+            LocalTime startTime
+    );
 
 
 }
