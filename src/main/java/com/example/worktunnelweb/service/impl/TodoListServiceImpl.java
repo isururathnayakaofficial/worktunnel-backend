@@ -55,26 +55,19 @@ public class TodoListServiceImpl implements TodoListService {
     @Override
     public void updateTodoList(TodoListDTO todoListDTO, Long todoID) {
 
-        // Check user exists
-//        todoListRepo.findById(Long.valueOf(String.valueOf(todoID)))
-//                .orElseThrow(() -> new RuntimeException("Task not found"));
-
-        // Find existing todo
-        TodoList todo = todoListRepo.findByRegisterIdAndDateAndStartTime(
-                        todoID,
-                        todoListDTO.getDate(),
-                        todoListDTO.getStartTime().toLocalTime()
-                )
-                .orElseThrow(() -> new RuntimeException("Todo not found"));
+        // Find existing
+        TodoList todo = todoListRepo.findById(todoID)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
 
         // Update fields
         todo.setTitle(todoListDTO.getTitle());
         todo.setPriority(todoListDTO.getPriority());
+        todo.setStatus(todoListDTO.getStatus());
         todo.setDate(todoListDTO.getDate());
         todo.setStartTime(todoListDTO.getStartTime());
         todo.setEndtime(todoListDTO.getEndTime());
 
-        // Save updated entity
+        // Save (this will UPDATE, not INSERT)
         todoListRepo.save(todo);
     }
 
