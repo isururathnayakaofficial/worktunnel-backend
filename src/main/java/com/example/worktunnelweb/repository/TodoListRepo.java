@@ -18,5 +18,4 @@ public interface TodoListRepo extends JpaRepository<TodoList, Long> {
             LocalTime startTime
     );
 
-
 }

@@ -29,8 +29,10 @@ public class TodoListController {
     public void updateTodoList(@RequestBody TodoListDTO todoListDTO ,@PathVariable Long registerId) {
         todoListService.updateTodoList(todoListDTO, registerId);
     }
-    @DeleteMapping("/delete")
-    public void deleteTodoList(@RequestParam String email) {    }
+    @DeleteMapping("/delete/{todoID}")
+    public void deleteTodoList(@PathVariable Long todoID) {
+        todoListService.deleteTodoList(todoID);
+    }
 
     @GetMapping("/get")
     public void getTodoList(@RequestParam String email) {    }

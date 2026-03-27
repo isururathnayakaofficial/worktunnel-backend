@@ -53,15 +53,15 @@ public class TodoListServiceImpl implements TodoListService {
     }
 
     @Override
-    public void updateTodoList(TodoListDTO todoListDTO, Long registerId) {
+    public void updateTodoList(TodoListDTO todoListDTO, Long todoID) {
 
         // Check user exists
-        registerRepo.findById(String.valueOf(registerId))
-                .orElseThrow(() -> new RuntimeException("User not found"));
+//        todoListRepo.findById(Long.valueOf(String.valueOf(todoID)))
+//                .orElseThrow(() -> new RuntimeException("Task not found"));
 
         // Find existing todo
         TodoList todo = todoListRepo.findByRegisterIdAndDateAndStartTime(
-                        registerId,
+                        todoID,
                         todoListDTO.getDate(),
                         todoListDTO.getStartTime().toLocalTime()
                 )
@@ -79,7 +79,13 @@ public class TodoListServiceImpl implements TodoListService {
     }
 
     @Override
-    public void deleteTodoList(String email) {
+    public void deleteTodoList(Long todoId) {
+        // Check user exists
+        todoListRepo.findById(Long.valueOf(String.valueOf(todoId)))
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Delete all todos for the user
+        todoListRepo.deleteById(todoId);
 
     }
 
