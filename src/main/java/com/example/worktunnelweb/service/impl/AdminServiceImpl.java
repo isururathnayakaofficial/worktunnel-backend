@@ -1,10 +1,13 @@
 package com.example.worktunnelweb.service.impl;
 
+import com.example.worktunnelweb.dto.AdminAuthDTO;
 import com.example.worktunnelweb.dto.AdminDTO;
 
+import com.example.worktunnelweb.dto.AdminResponse;
 import com.example.worktunnelweb.entity.Admin;
 import com.example.worktunnelweb.repository.AdminRepo;
 import com.example.worktunnelweb.service.AdminService;
+import com.example.worktunnelweb.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +20,7 @@ public class AdminServiceImpl implements AdminService {
 
     private final PasswordEncoder passwordEncoder;
     private final AdminRepo adminRepo;
+    private final JwtUtil jwtUtil;
     @Autowired
     private final EmailService emailService;
 
@@ -62,6 +66,19 @@ public class AdminServiceImpl implements AdminService {
             throw new RuntimeException("Admin not found");
         }
         adminRepo.deleteById(String.valueOf(id));
+
+    }
+
+    @Override
+    public AdminResponse loginAdmin(AdminAuthDTO adminAuthDTO) {
+        Admin admin = (Admin) adminRepo.findByAdminName(adminAuthDTO.getUsername())
+                .orElseThrow(() -> new RuntimeException("Admin not found"));
+
+        if (!passwordEncoder.matches(adminAuthDTO.getPassword(), admin.getPassword())) {
+            throw new RuntimeException("Invalid password");
+        }
+        String token=jwtUtil.generateToken(admin.getAdminName());
+        return new AdminResponse(token);
 
     }
 }
