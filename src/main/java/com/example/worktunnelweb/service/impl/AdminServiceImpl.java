@@ -6,6 +6,7 @@ import com.example.worktunnelweb.entity.Admin;
 import com.example.worktunnelweb.repository.AdminRepo;
 import com.example.worktunnelweb.service.AdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ public class AdminServiceImpl implements AdminService {
 
     private final PasswordEncoder passwordEncoder;
     private final AdminRepo adminRepo;
+    @Autowired
+    private final EmailService emailService;
 
     @Override
     public void saveAdmin(AdminDTO adminDTO) {
@@ -32,8 +35,12 @@ public class AdminServiceImpl implements AdminService {
       admin.setContact(adminDTO.getContact());
       admin.setPassword(passwordEncoder.encode(adminDTO.getPassword()));
       admin.setRoleName(adminDTO.getRoleName());
-      adminRepo.save(admin);
-
+      Admin saveAdmin =adminRepo.save(admin);
+      if (saveAdmin != null && saveAdmin.getEmail()!=null) {
+          emailService.sendAdminCredentials(saveAdmin.getEmail(),saveAdmin.getAdminName(), adminDTO.getPassword());
+      }else {
+          throw new RuntimeException("Failed to save admin or email is null");
+      }
     }
 
     @Override
