@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
@@ -34,6 +36,7 @@ public class AdminServiceImpl implements AdminService {
             throw new RuntimeException("Password is already in use");
         }
       Admin admin = new Admin();
+        admin.setId(adminDTO.getId());
       admin.setAdminName(adminDTO.getAdminName());
       admin.setEmail(adminDTO.getEmail());
       admin.setContact(adminDTO.getContact());
@@ -80,5 +83,21 @@ public class AdminServiceImpl implements AdminService {
         String token=jwtUtil.generateToken(admin.getAdminName());
         return new AdminResponse(token);
 
+    }
+
+    @Override
+    public List<AdminDTO> getAllAdmins() {
+        List<Admin> adminList = (List<Admin>) adminRepo.findAll();
+
+        return adminList.stream().map(admin -> {
+            AdminDTO dto = new AdminDTO();
+            dto.setId(admin.getId());
+            dto.setAdminName(admin.getAdminName());
+            dto.setEmail(admin.getEmail());
+            dto.setContact(admin.getContact());
+            dto.setPassword(admin.getPassword());
+            dto.setRoleName(admin.getRoleName());
+            return dto;
+        }).toList();
     }
 }

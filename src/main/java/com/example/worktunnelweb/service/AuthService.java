@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -57,5 +59,18 @@ public class AuthService {
         registerRepo.save(user);
 
         return "User registered successfully";
+    }
+
+    public List<RegisterDTO> getAllUsers() {
+        List<Register> registerList=(List<Register>) registerRepo.findAll();
+        return registerList.stream().map(user->{
+            RegisterDTO registerDTO=new RegisterDTO();
+            registerDTO.setId(String.valueOf(user.getId()));
+            registerDTO.setName(user.getName());
+            registerDTO.setEmail(user.getEmail());
+            registerDTO.setProfession(user.getProfession());
+            registerDTO.setPassword(String.valueOf(user.getAge()));
+            return registerDTO;
+        }).toList();
     }
 }

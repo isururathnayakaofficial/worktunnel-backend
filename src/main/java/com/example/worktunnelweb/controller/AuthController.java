@@ -32,4 +32,8 @@ public class AuthController {
        authService.register(request);
     }
 
+    @GetMapping("/getAll")
+    public ResponseEntity<?>getAllUsers() {
+        return ResponseEntity.ok(authService.getAllUsers());
+    }
 }

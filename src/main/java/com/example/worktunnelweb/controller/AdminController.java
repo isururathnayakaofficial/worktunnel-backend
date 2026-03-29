@@ -33,5 +33,8 @@ public class AdminController {
     public void deleteAdmin(@PathVariable int id) {
         adminService.deleteAdmin(id);
     }
-
+    @GetMapping("/getAll")
+    public ResponseEntity<?> getAllAdmins() {
+        return ResponseEntity.ok(adminService.getAllAdmins());
+    }
 }

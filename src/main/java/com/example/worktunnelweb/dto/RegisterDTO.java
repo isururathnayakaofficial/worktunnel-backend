@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Data
 public class RegisterDTO {
+    private String id;
     private String name;
     private String email;
     private String profession;
