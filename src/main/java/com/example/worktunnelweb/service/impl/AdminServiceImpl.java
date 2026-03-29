@@ -59,7 +59,12 @@ public class AdminServiceImpl implements AdminService {
      admin.setContact(adminDTO.getContact());
      admin.setPassword(passwordEncoder.encode(adminDTO.getPassword()));
      admin.setRoleName(adminDTO.getRoleName());
-     adminRepo.save(admin);
+
+     Admin updateAdmin =adminRepo.save(admin);
+     if (updateAdmin != null && updateAdmin.getEmail()!=null) {
+         emailService.sendUpdatedAdminCredentials(updateAdmin.getEmail(),updateAdmin.getAdminName(), adminDTO.getPassword());
+     }
+
 
     }
 

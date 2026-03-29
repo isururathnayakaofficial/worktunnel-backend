@@ -27,4 +27,21 @@ public class EmailService {
 
         mailSender.send(message);
     }
+    public void sendUpdatedAdminCredentials(String toEmail, String username, String password) {
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(toEmail);
+        message.setSubject("Admin Account Updated");
+
+        message.setText(
+                "Hello,\n\n" +
+                        "Your admin account details have been updated.\n\n" +
+                        "Updated Username: " + username + "\n" +
+                        "Updated Password: " + password + "\n\n" +
+                        "If you did not request this change, please contact support immediately.\n\n" +
+                        "Thank you!"
+        );
+
+        mailSender.send(message);
+    }
 }
