@@ -73,4 +73,11 @@ public class AuthService {
             return registerDTO;
         }).toList();
     }
+
+        public void deleteUser(int id){
+        if (!registerRepo.existsById(String.valueOf(id))) {
+            throw new RuntimeException("User not found");
+        }
+        registerRepo.deleteById(String.valueOf(id));
+    }
 }
