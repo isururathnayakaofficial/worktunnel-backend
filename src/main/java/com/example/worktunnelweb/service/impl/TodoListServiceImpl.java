@@ -97,6 +97,7 @@ public class TodoListServiceImpl implements TodoListService {
 
         return todoListList.stream().map(todo -> {
             TodoListDTO dto = new TodoListDTO();
+            dto.setId(todo.getId());
             dto.setTitle(todo.getTitle());
             dto.setPriority(todo.getPriority());
             dto.setStatus(todo.getStatus());

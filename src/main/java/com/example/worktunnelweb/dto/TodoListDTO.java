@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 
 public class TodoListDTO {
-
+    private int id;
     private String title;
     private String priority;
     private LocalDate date;

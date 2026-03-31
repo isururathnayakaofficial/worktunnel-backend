@@ -25,9 +25,9 @@ public class TodoListController {
 
         return ResponseEntity.ok("Todo saved successfully");
     }
-    @PutMapping("/update/{registerId}")
-    public void updateTodoList(@RequestBody TodoListDTO todoListDTO ,@PathVariable Long registerId) {
-        todoListService.updateTodoList(todoListDTO, registerId);
+    @PutMapping("/update/{todoId}")
+    public void updateTodoList(@RequestBody TodoListDTO todoListDTO ,@PathVariable Long todoId) {
+        todoListService.updateTodoList(todoListDTO, todoId);
     }
     @DeleteMapping("/delete/{todoID}")
     public void deleteTodoList(@PathVariable Long todoID) {
