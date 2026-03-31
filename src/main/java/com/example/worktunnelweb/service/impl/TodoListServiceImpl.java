@@ -20,15 +20,23 @@ public class TodoListServiceImpl implements TodoListService {
     private final RegisterRepo registerRepo;
     private final TodoListRepo todoListRepo;
     @Override
-    public void saveTodoList(TodoListDTO todoListDTO,Long registeredId) {
-        boolean exists = todoListRepo.existsByRegisterIdAndDateAndStartTime(
+    public void saveTodoList(TodoListDTO todoListDTO, Long registeredId) {
+
+        // Validate time
+        if (todoListDTO.getStartTime().after(todoListDTO.getEndTime())) {
+            throw new RuntimeException("Start time must be before end time");
+        }
+
+        // Check overlapping tasks
+        List<TodoList> conflicts = todoListRepo.findConflictingTasks(
                 registeredId,
                 todoListDTO.getDate(),
-                todoListDTO.getStartTime()
+                todoListDTO.getStartTime(),
+                todoListDTO.getEndTime()
         );
 
-        if (exists) {
-            throw new RuntimeException("You already have a task at this time");
+        if (!conflicts.isEmpty()) {
+            throw new RuntimeException("Time conflict! You already have a task within this time range.");
         }
 
         Register register = registerRepo.findById(String.valueOf(registeredId))
@@ -40,29 +48,43 @@ public class TodoListServiceImpl implements TodoListService {
         todo.setDate(todoListDTO.getDate());
         todo.setStartTime(todoListDTO.getStartTime());
         todo.setEndtime(todoListDTO.getEndTime());
-        //justify the is the task completed or pending update
+
         if (todoListDTO.getStatus() == null || todoListDTO.getStatus().isEmpty()) {
             todo.setStatus("PENDING");
         } else {
             todo.setStatus(todoListDTO.getStatus());
         }
 
-        // set relationship
         todo.setRegister(register);
 
         todoListRepo.save(todo);
-
-
     }
 
     @Override
     public void updateTodoList(TodoListDTO todoListDTO, Long todoID) {
 
-        // Find existing
         TodoList todo = todoListRepo.findById(todoID)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
 
-        // Update fields
+        // Validate time
+        if (todoListDTO.getStartTime().after(todoListDTO.getEndTime())) {
+            throw new RuntimeException("Start time must be before end time");
+        }
+
+        // Check conflicts (excluding current task)
+        List<TodoList> conflicts = todoListRepo.findConflictsForUpdate(
+                (long) todo.getRegister().getId(),
+                todoListDTO.getDate(),
+                todoListDTO.getStartTime(),
+                todoListDTO.getEndTime(),
+                todoID
+        );
+
+        if (!conflicts.isEmpty()) {
+            throw new RuntimeException("Time conflict! Another task already exists in this time range.");
+        }
+
+        // Update
         todo.setTitle(todoListDTO.getTitle());
         todo.setPriority(todoListDTO.getPriority());
         todo.setStatus(todoListDTO.getStatus());
@@ -70,7 +92,6 @@ public class TodoListServiceImpl implements TodoListService {
         todo.setStartTime(todoListDTO.getStartTime());
         todo.setEndtime(todoListDTO.getEndTime());
 
-        // Save (this will UPDATE, not INSERT)
         todoListRepo.save(todo);
     }
 
@@ -93,7 +114,7 @@ public class TodoListServiceImpl implements TodoListService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // get todos for that user
-        List<TodoList> todoListList = todoListRepo.findByRegisterId(registerId);
+        List<TodoList> todoListList = todoListRepo.findByRegisterId((long) registerId);
 
         return todoListList.stream().map(todo -> {
             TodoListDTO dto = new TodoListDTO();

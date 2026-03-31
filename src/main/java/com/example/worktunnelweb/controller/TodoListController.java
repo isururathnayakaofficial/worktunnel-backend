@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
@@ -26,16 +28,22 @@ public class TodoListController {
         return ResponseEntity.ok("Todo saved successfully");
     }
     @PutMapping("/update/{todoId}")
-    public void updateTodoList(@RequestBody TodoListDTO todoListDTO ,@PathVariable Long todoId) {
+    public ResponseEntity <String> updateTodoList(@RequestBody TodoListDTO todoListDTO ,@PathVariable Long todoId) {
         todoListService.updateTodoList(todoListDTO, todoId);
+        return ResponseEntity.ok("Todo Updated");
+
     }
     @DeleteMapping("/delete/{todoID}")
-    public void deleteTodoList(@PathVariable Long todoID) {
+    public ResponseEntity <String> deleteTodoList(@PathVariable Long todoID) {
         todoListService.deleteTodoList(todoID);
+        return ResponseEntity.ok("Todo Deleted");
     }
 
     @GetMapping("/get/{registerId}")
-    public ResponseEntity<?> getTodoList(@PathVariable int registerId) {
-       return ResponseEntity.ok(todoListService.getTodoList(registerId)) ;
+    public <TodoDTO> ResponseEntity<?> getTodoList(@PathVariable int registerId) {
+        List<TodoDTO> todos = (List<TodoDTO>) todoListService.getTodoList(registerId); // fetch list
+
+        // Return the actual list as JSON
+        return ResponseEntity.ok(todos);
     }
 }
