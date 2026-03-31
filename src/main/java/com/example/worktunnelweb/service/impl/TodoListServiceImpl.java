@@ -7,9 +7,12 @@ import com.example.worktunnelweb.repository.RegisterRepo;
 import com.example.worktunnelweb.repository.TodoListRepo;
 import com.example.worktunnelweb.service.TodoListService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -83,7 +86,24 @@ public class TodoListServiceImpl implements TodoListService {
     }
 
     @Override
-    public void getTodoList(String email) {
+    public List<TodoListDTO> getTodoList(int registerId) {
 
+        // check user exists
+        registerRepo.findById(String.valueOf(registerId))
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // get todos for that user
+        List<TodoList> todoListList = todoListRepo.findByRegisterId(String.valueOf(registerId));
+
+        return todoListList.stream().map(todo -> {
+            TodoListDTO dto = new TodoListDTO();
+            dto.setTitle(todo.getTitle());
+            dto.setPriority(todo.getPriority());
+            dto.setStatus(todo.getStatus());
+            dto.setDate(todo.getDate());
+            dto.setStartTime(todo.getStartTime());
+            dto.setEndTime(todo.getEndtime());
+            return dto;
+        }).toList();
     }
 }

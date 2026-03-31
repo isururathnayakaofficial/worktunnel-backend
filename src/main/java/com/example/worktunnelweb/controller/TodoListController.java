@@ -34,6 +34,8 @@ public class TodoListController {
         todoListService.deleteTodoList(todoID);
     }
 
-    @GetMapping("/get")
-    public void getTodoList(@RequestParam String email) {    }
+    @GetMapping("/get/{registerId}")
+    public void getTodoList(@PathVariable int registerId) {
+        todoListService.getTodoList(registerId);
+    }
 }
