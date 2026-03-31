@@ -93,7 +93,7 @@ public class TodoListServiceImpl implements TodoListService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // get todos for that user
-        List<TodoList> todoListList = todoListRepo.findByRegisterId(String.valueOf(registerId));
+        List<TodoList> todoListList = todoListRepo.findByRegisterId(registerId);
 
         return todoListList.stream().map(todo -> {
             TodoListDTO dto = new TodoListDTO();

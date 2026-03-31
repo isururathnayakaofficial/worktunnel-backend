@@ -35,7 +35,7 @@ public class TodoListController {
     }
 
     @GetMapping("/get/{registerId}")
-    public void getTodoList(@PathVariable int registerId) {
-        todoListService.getTodoList(registerId);
+    public ResponseEntity<?> getTodoList(@PathVariable int registerId) {
+       return ResponseEntity.ok(todoListService.getTodoList(registerId)) ;
     }
 }

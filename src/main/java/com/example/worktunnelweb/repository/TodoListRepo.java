@@ -15,5 +15,5 @@ public interface TodoListRepo extends JpaRepository<TodoList, Long> {
     boolean existsByRegisterIdAndDateAndStartTime(Long registerId, LocalDate date, Time startTime);
 
 
-    List<TodoList> findByRegisterId(String s);
+    List<TodoList> findByRegisterId(int registerId);
 }
