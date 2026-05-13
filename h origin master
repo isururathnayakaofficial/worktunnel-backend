@@ -1,0 +1,50 @@
+[33mf7a0e37[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: commit: Clean commit without API key
+[33mc037487[m[33m ([m[1;31morigin/sub[m[33m)[m HEAD@{1}: reset: moving to origin/master
+[33m947e05b[m HEAD@{2}: commit: 27th commit-fix the bug
+[33m096332c[m HEAD@{3}: rebase (abort): returning to refs/heads/master
+[33m096332c[m HEAD@{4}: rebase (abort): returning to refs/heads/master
+[33m096332c[m HEAD@{5}: commit: 27th commit-fix the bug
+[33m11570ba[m HEAD@{6}: commit: 27th commit-fix the bug
+[33mee85758[m HEAD@{7}: commit: 26th commit-Ai integrated successfully
+[33me1d62e8[m HEAD@{8}: commit (amend): 26th commit-Ai integrated successfully
+[33mf4734c8[m HEAD@{9}: commit: 26th commit-Ai integrated successfully
+[33m662ac19[m HEAD@{10}: commit: 26th commit-Ai integrated successfully
+[33m7e61cc5[m HEAD@{11}: commit: 26th commit-Ai integrated successfully
+[33m85ccaea[m HEAD@{12}: commit: 25th commit-Ai integrated successfully
+[33mc037487[m[33m ([m[1;31morigin/sub[m[33m)[m HEAD@{13}: commit: 24th commit-debug
+[33md431faf[m HEAD@{14}: commit: 24th commit-debug
+[33mb7f78de[m HEAD@{15}: commit: 23rd commit-using register id fetch the data from backend
+[33m81b27d3[m HEAD@{16}: commit: 23rd commit-doctors specific feature developed
+[33m0788208[m HEAD@{17}: commit: 23rd commit-doctors specific feature developed
+[33m3994196[m HEAD@{18}: commit: 22nd commit-add email service for updating process also
+[33m091c713[m HEAD@{19}: commit: 21th commit-auth crud from front end successfully accessed
+[33m1c1cdb4[m HEAD@{20}: commit: 20th commit-config with front end register part
+[33m6edde7b[m HEAD@{21}: commit: 19th commit-admin panel config with front end
+[33m600d223[m HEAD@{22}: commit: 18th commit-admin email scenario working now
+[33mced095f[m HEAD@{23}: commit: 18th commit-started to implimant spring mail and data categorization n backend
+[33m52bc9d4[m HEAD@{24}: commit: 17th commit-fixed the bug in update process
+[33m7f1c1fc[m HEAD@{25}: commit: 17th commit-todolist delete part successfully done and fixed the bug
+[33m0808ed9[m HEAD@{26}: commit: 16th commit-todolist update part successfully done
+[33m0040c36[m HEAD@{27}: commit: 15th commit-admin delete part successfully done
+[33m64c5840[m HEAD@{28}: commit: 15th commit-admin update part successfully done
+[33m33a26b6[m HEAD@{29}: commit: 14th commit-fixed the dto mismatching bug
+[33m246e4f4[m HEAD@{30}: commit: 14th commit-admin saved successfully
+[33m4bc4afd[m HEAD@{31}: commit: 13th commit-started implementations profession based suggestions
+[33m756b501[m HEAD@{32}: commit: 12th commit-secure the admin passwords
+[33m0519903[m HEAD@{33}: commit: 11 th commit-access control
+[33m7e55b8e[m HEAD@{34}: commit: 10 th commit-started admin panel
+[33m7bb7af9[m HEAD@{35}: commit: 9 th commit-can identify,is prompt registered user or anonymous user (reusable and need one table )
+[33mc1f80a1[m HEAD@{36}: commit: 8 th commit-captured keywords from ai used users
+[33m603cd04[m HEAD@{37}: commit: 8 th commit-made reusable Ai backend handling part
+[33m8b50dea[m HEAD@{38}: commit: 7 th commit-Anonymous(without login ai users) keywords captured
+[33m554952e[m HEAD@{39}: commit: 6 th commit-added status controlling part
+[33mceab0db[m HEAD@{40}: commit: 6 th commit-todo list saved and fixed the relation
+[33mc37dea9[m HEAD@{41}: commit: 5 th commit-start to implant doto list data flow path
+[33m9fe9eab[m HEAD@{42}: commit: 5 th commit-start to implimant doto list data flow path
+[33m36899b8[m HEAD@{43}: commit: 4 th commit-logged and work successfully
+[33m3c5f106[m HEAD@{44}: commit: 4 th commit-fixed the bug in register validation
+[33m3ae8241[m HEAD@{45}: commit: 3 rd commit-password saved as encrypted version
+[33m2597a0b[m HEAD@{46}: commit: 3 rd commit-tested the security impl & registered a user successfully
+[33mbdc4b37[m HEAD@{47}: commit: 3 rd commit-tested the security impl & registered a user successfully
+[33ma990bf6[m HEAD@{48}: commit: 2 nd commit-fixed the bug in security implimantation
+[33m4ae65c6[m HEAD@{49}: commit (initial): 1 st commit-start the security implimantation
