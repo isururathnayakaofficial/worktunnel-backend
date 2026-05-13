@@ -4,5 +4,6 @@ import com.example.worktunnelweb.dto.UserAiDTO;
 
 public interface AnonymousAiService {
 
-    void promptSave(UserAiDTO userAiDTO);
+    String promptSave(UserAiDTO userAiDTO);
+    Long getCount();
 }

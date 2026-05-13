@@ -16,6 +16,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+
 public class AuthService {
 
 
@@ -41,12 +42,12 @@ public class AuthService {
 
     }
 
-    public String register(RegisterDTO registerDTO) {
-
+    public AuthResponseDTO register(RegisterDTO registerDTO) {
         // check email
         if (registerRepo.existsByEmail(registerDTO.getEmail())) {
             throw new RuntimeException("Email is already in use");
         }
+
         // create user
         Register user = Register.builder()
                 .name(registerDTO.getName())
@@ -58,7 +59,10 @@ public class AuthService {
 
         registerRepo.save(user);
 
-        return "User registered successfully";
+        // 🔐 generate token after registration
+        String token = jwtUtil.generateToken(user.getName());
+
+        return new AuthResponseDTO(token);
     }
 
     public List<RegisterDTO> getAllUsers() {
@@ -69,15 +73,21 @@ public class AuthService {
             registerDTO.setName(user.getName());
             registerDTO.setEmail(user.getEmail());
             registerDTO.setProfession(user.getProfession());
-            registerDTO.setPassword(String.valueOf(user.getAge()));
+            registerDTO.setAge(user.getAge());
+            //registerDTO.setPassword(String.valueOf(user.getAge()));
             return registerDTO;
         }).toList();
     }
 
-        public void deleteUser(int id){
-        if (!registerRepo.existsById(String.valueOf(id))) {
+    public void deleteUser(int id) {
+        try {
+            registerRepo.deleteById(String.valueOf(id));
+        } catch (Exception e) {
             throw new RuntimeException("User not found");
         }
-        registerRepo.deleteById(String.valueOf(id));
+    }
+    public long getUserCount() {
+       return registerRepo.count();
+
     }
 }

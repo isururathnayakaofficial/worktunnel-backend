@@ -15,7 +15,7 @@ public interface TodoListRepo extends JpaRepository<TodoList, Long> {
 
     List<TodoList> findByRegisterId(Long registerId);
 
-    // 🔥 Save conflict check
+    //  Save conflict check
     @Query("SELECT t FROM TodoList t WHERE t.register.id = :registerId " +
             "AND t.date = :date " +
             "AND t.startTime < :endTime " +
@@ -27,7 +27,7 @@ public interface TodoListRepo extends JpaRepository<TodoList, Long> {
             @Param("endTime") Time endTime
     );
 
-    // 🔥 Update conflict check (exclude current task)
+    //  Update conflict check (exclude current task)
     @Query("SELECT t FROM TodoList t WHERE t.register.id = :registerId " +
             "AND t.date = :date " +
             "AND t.startTime < :endTime " +

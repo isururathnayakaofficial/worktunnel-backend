@@ -35,8 +35,11 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/auth/login",
-                                "auth/register"
+                                "/auth/**",
+                                "/api/mail/**",
+                                  "/api/admin/**",
+                                "/api/todo/**",
+                                "/admin/User/**"
                         ).permitAll()
 
                         .anyRequest().permitAll()

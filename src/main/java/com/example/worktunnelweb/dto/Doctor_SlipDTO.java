@@ -10,12 +10,15 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Doctor_SlipDTO {
-    private int id;
+    private String fromEmail;
+    private String appPassword;
+
+    private String patientEmail;
+    private String doctorName;
     private String patientName;
     private int age;
     private String description;
     private String medicine_list;
-    private String email;
     private LocalDate date;
 
 }

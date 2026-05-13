@@ -2,16 +2,16 @@ package com.example.worktunnelweb.service.impl;
 
 import com.example.worktunnelweb.dto.AdminAuthDTO;
 import com.example.worktunnelweb.dto.AdminDTO;
-
 import com.example.worktunnelweb.dto.AdminResponse;
 import com.example.worktunnelweb.entity.Admin;
 import com.example.worktunnelweb.repository.AdminRepo;
 import com.example.worktunnelweb.service.AdminService;
 import com.example.worktunnelweb.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,89 +19,110 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
-
     private final PasswordEncoder passwordEncoder;
     private final AdminRepo adminRepo;
     private final JwtUtil jwtUtil;
-    @Autowired
     private final EmailService emailService;
+
 
     @Override
     public void saveAdmin(AdminDTO adminDTO) {
 
         if (adminRepo.existsByEmail(adminDTO.getEmail())) {
-            throw new RuntimeException("Email is already in use");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is already in use");
         }
-        if (adminRepo.existsByPassword(adminDTO.getPassword())) {
-            throw new RuntimeException("Password is already in use");
+
+        Admin admin = new Admin();
+        admin.setAdminName(adminDTO.getAdminName());
+        admin.setEmail(adminDTO.getEmail());
+        admin.setContact(adminDTO.getContact());
+        admin.setRoleName(adminDTO.getRoleName());
+
+
+        admin.setPassword(passwordEncoder.encode(adminDTO.getPassword()));
+
+        Admin savedAdmin = adminRepo.save(admin);
+
+        if (savedAdmin.getEmail() != null) {
+            emailService.sendAdminCredentials(
+                    savedAdmin.getEmail(),
+                    savedAdmin.getAdminName(),
+                    adminDTO.getPassword() // send plain password via email
+            );
         }
-      Admin admin = new Admin();
-        admin.setId(adminDTO.getId());
-      admin.setAdminName(adminDTO.getAdminName());
-      admin.setEmail(adminDTO.getEmail());
-      admin.setContact(adminDTO.getContact());
-      admin.setPassword(passwordEncoder.encode(adminDTO.getPassword()));
-      admin.setRoleName(adminDTO.getRoleName());
-      Admin saveAdmin =adminRepo.save(admin);
-      if (saveAdmin != null && saveAdmin.getEmail()!=null) {
-          emailService.sendAdminCredentials(saveAdmin.getEmail(),saveAdmin.getAdminName(), adminDTO.getPassword());
-      }else {
-          throw new RuntimeException("Failed to save admin or email is null");
-      }
     }
+
 
     @Override
-    public void updateAdmin(AdminDTO adminDTO,int id) {
+    public void updateAdmin(AdminDTO adminDTO, int id) {
 
-     Admin admin = adminRepo.findById(String.valueOf(id)).orElseThrow(() -> new RuntimeException("Admin not found"));
-     admin.setAdminName(adminDTO.getAdminName());
-     admin.setEmail(adminDTO.getEmail());
-     admin.setContact(adminDTO.getContact());
-     admin.setPassword(passwordEncoder.encode(adminDTO.getPassword()));
-     admin.setRoleName(adminDTO.getRoleName());
+        Admin admin = adminRepo.findById(String.valueOf(id))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Admin not found"));
 
-     Admin updateAdmin =adminRepo.save(admin);
-     if (updateAdmin != null && updateAdmin.getEmail()!=null) {
-         emailService.sendUpdatedAdminCredentials(updateAdmin.getEmail(),updateAdmin.getAdminName(), adminDTO.getPassword());
-     }
+        admin.setAdminName(adminDTO.getAdminName());
+        admin.setEmail(adminDTO.getEmail());
+        admin.setContact(adminDTO.getContact());
+        admin.setRoleName(adminDTO.getRoleName());
 
 
+        admin.setPassword(passwordEncoder.encode(adminDTO.getPassword()));
+
+        Admin updatedAdmin = adminRepo.save(admin);
+
+        if (updatedAdmin.getEmail() != null) {
+            emailService.sendUpdatedAdminCredentials(
+                    updatedAdmin.getEmail(),
+                    updatedAdmin.getAdminName(),
+                    adminDTO.getPassword()
+            );
+        }
     }
+
 
     @Override
     public void deleteAdmin(int id) {
-        if (!adminRepo.existsById(String.valueOf(id))) {
-            throw new RuntimeException("Admin not found");
-        }
-        adminRepo.deleteById(String.valueOf(id));
 
+        if (!adminRepo.existsById(String.valueOf(id))) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Admin not found");
+        }
+
+        adminRepo.deleteById(String.valueOf(id));
     }
+
 
     @Override
     public AdminResponse loginAdmin(AdminAuthDTO adminAuthDTO) {
-        Admin admin = (Admin) adminRepo.findByAdminName(adminAuthDTO.getUsername())
-                .orElseThrow(() -> new RuntimeException("Admin not found"));
+
+        Admin admin = adminRepo.findByAdminName(adminAuthDTO.getUsername())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Admin not found"));
+
 
         if (!passwordEncoder.matches(adminAuthDTO.getPassword(), admin.getPassword())) {
-            throw new RuntimeException("Invalid password");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid password");
         }
-        String token=jwtUtil.generateToken(admin.getAdminName());
-        return new AdminResponse(token);
 
+
+        String token = jwtUtil.generateToken(admin.getAdminName());
+
+        return new AdminResponse(token);
     }
+
 
     @Override
     public List<AdminDTO> getAllAdmins() {
+
         List<Admin> adminList = (List<Admin>) adminRepo.findAll();
 
         return adminList.stream().map(admin -> {
             AdminDTO dto = new AdminDTO();
             dto.setId(admin.getId());
             dto.setAdminName(admin.getAdminName());
-            dto.setEmail(admin.getEmail());
             dto.setContact(admin.getContact());
-            dto.setPassword(admin.getPassword());
             dto.setRoleName(admin.getRoleName());
+            dto.setEmail(admin.getEmail());
+
+
+
             return dto;
         }).toList();
     }

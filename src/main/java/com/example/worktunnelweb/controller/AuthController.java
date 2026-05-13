@@ -37,7 +37,12 @@ public class AuthController {
         return ResponseEntity.ok(authService.getAllUsers());
     }
     @DeleteMapping("/delete/{id}")
-    public void Delete(@PathVariable int id) {
+     public void Delete(@PathVariable int id) {
       authService.deleteUser(id);
+    }
+
+    @GetMapping("/userCount")
+    public ResponseEntity<?> getUserCont() {
+        return ResponseEntity.ok(authService.getUserCount());
     }
 }

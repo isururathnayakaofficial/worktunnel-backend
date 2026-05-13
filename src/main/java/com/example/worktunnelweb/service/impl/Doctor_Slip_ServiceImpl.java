@@ -20,7 +20,7 @@ public class Doctor_Slip_ServiceImpl implements Doctor_Slip_Service {
         doctorSlip.setAge(doctorSlipDTO.getAge());
         doctorSlip.setDescription(doctorSlipDTO.getDescription());
         doctorSlip.setMedicine_list(doctorSlipDTO.getMedicine_list());
-        doctorSlip.setEmail(doctorSlipDTO.getEmail());
+        //doctorSlip.setEmail(doctorSlipDTO.getEmail());
 
         doctorSlipRepo.save(doctorSlip);
 
